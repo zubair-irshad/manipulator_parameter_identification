@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<!-- @file 05-World-Krang-Teleop.urdf -->
+<!-- @author Jon Scholz -->
+<!-- @date July 10, 2013 -->
+<!-- @brief The world for Krang teleop. -->
+ 
+<world name="krang_teleop">
+
+	<include filename="greenArrow.urdf" model_name="greenArrow"/>
+	<include filename="Krang.urdf" model_name="Krang"/>
+
+	<entity model="greenArrow" name="g1"> <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/> </entity>
+	<entity model="greenArrow" name="g2"> <origin xyz="-0.017805 0.2848 1.4375" rpy="0.0 0.0 0.0"/> </entity>
+	<entity model="greenArrow" name="g3"> <origin xyz="-0.027805 0.2848 1.4375" rpy="0.0 0.0 0.0"/> </entity>
+	<entity model="greenArrow" name="g4"> <origin xyz="-0.037805 0.2848 1.4375" rpy="0.0 0.0 0.0"/> </entity>
+	<entity model="Krang" name="Krang"> <origin xyz="0.0 0.0 0.27" rpy="1.5708 0 -1.5708"/> </entity> 
+
+</world> 

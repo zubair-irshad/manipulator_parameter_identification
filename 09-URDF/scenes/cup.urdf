@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<robot name="cup">
+
+	<!-- Link 0 -->
+	<link name="link_0">
+		<inertial>
+			<mass value="0.05" />
+			<inertia ixx="0.00012448" ixy="0.0" ixz="0.0" iyy="0.00012448" iyz="0.0" izz="0.000165625" />
+			<origin xyz="0 0 0" />
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="objects/cup.dae"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="objects/cup.dae"/>
+			</geometry>
+		</collision>
+	</link>
+
+</robot>

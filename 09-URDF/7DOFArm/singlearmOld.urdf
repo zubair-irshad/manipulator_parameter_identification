@@ -1,0 +1,163 @@
+<?xml version="1.0" ?>
+<!-- @file SingleArm.urdf -->
+<!-- @author Areeb Mehmood -->
+<!-- @date March 22, 2018 -->
+<!-- @brief This file contains the .urdf definition for a single LWA3 arm. -->
+
+<robot name = "SingleArm">
+
+	<link name = "world" />
+
+	<link name = "Bracket"> 
+	    <inertial>
+		    <!-- The inertial parameters of the Bracket don't matter. Set to zero -->
+	      <mass value="0"/>
+	      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+				<!-- offseted with 0.0827 because the origin of the bracket is at the bottom -->
+	      <origin xyz="0 0 0"/>
+	    </inertial>
+		<visual> 
+			<geometry> 
+				<mesh filename="../scenes/bracket.dae" />
+			</geometry> 
+		</visual> 
+		<collision> 
+			<origin xyz="0.0012875 0.0582 -0.0280530"/> 
+			<geometry> 
+				<box size="0.2815 0.23 0.22611"/> 
+			</geometry> 
+		</collision> 
+	</link>
+
+	<link name = "L1"> 
+	    <inertial>
+	      <mass value="7.35"/>
+	      <inertia ixx="0.0381" ixy="0.0104" ixz="0" iyy="0.0187" iyz="0" izz="0.0430"/>
+	      <origin xyz="0.0217 -0.0691 0"/>
+	    </inertial>
+	<visual> 
+		<geometry> 
+			<mesh filename="../scenes/Schunk/L1.dae" /> 
+		</geometry> 
+	</visual> 
+	<collision> 
+		<origin xyz="0.015 -0.080866 0.0"/> 
+		<geometry> 
+			<box size="0.16 0.29367 0.13188"/> 
+		</geometry> 
+	</collision> 
+	</link>
+
+	<link name = "L2"> 
+    <inertial>
+      <mass value="6.1405"/>
+      <!-- <inertia ixx="0.0504" ixy="0.0006" ixz="0" iyy="0.0178" iyz="0" izz="0.0579"/> -->
+	  <inertia ixx="0.0320" ixy="0.0097" ixz="0" iyy="0.0134" iyz="0" izz="0.0350"/>
+      <origin xyz="0.0269 -0.0548 0"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L2.dae" /> </geometry> </visual> 
+		<collision> <origin xyz="0.017042 -0.058309 0.0"/> <geometry> <box size="0.14591 0.24658 0.13"/> </geometry> </collision> 
+	</link>
+
+	<link name = "L3"> 
+    <inertial>
+      <mass value="4.531"/>
+      <!-- <inertia ixx="0.0354" ixy="-0.0003" ixz="0" iyy="0.01" iyz="0" izz="0.0394"/> -->
+      <inertia ixx="0.0180" ixy="0.005" ixz="0" iyy="0.0084" iyz="0" izz="0.0204"/>
+	  <origin xyz="0.0188 -0.00619 0"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L3.dae" /> </geometry> </visual> 
+		<collision> <origin xyz="0.014000 -0.075113 0.0"/> <geometry> <box size="0.13800 0.26217 0.11189"/> </geometry> </collision> 
+	</link>
+
+	<link name = "L4"> 
+    <inertial>
+      <mass value="3.2245"/>
+      <!-- <inertia ixx="0.0209" ixy="0.0003" ixz="0" iyy="0.0067" iyz="0" izz="0.0239"/> -->
+    <inertia ixx="0.0133" ixy="0.004" ixz="0" iyy="0.0049" iyz="0" izz="0.0145"/>  
+	<origin xyz="0.0238 -0.0484 0"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L4.dae" /> </geometry> </visual> 
+		<collision> <origin xyz="0.018200 -0.052050 0.0"/> <geometry> <box size="0.12960 0.2141 0.11"/> </geometry> </collision> 
+	</link>
+
+	<link name = "L5"> 
+    <inertial>
+      <mass value="2.318"/>
+      <!-- <inertia ixx="0.012" ixy="-0.0002" ixz="0" iyy="0.0035" iyz="0" izz="0.0135"/> -->
+      <inertia ixx="0.0063" ixy="0.0017" ixz="0" iyy="0.0029" iyz="0" izz="0.0072"/>
+	  <origin xyz="0.0166 -0.0494 0"/>
+    </inertial>
+		<visual> 
+			<geometry> 
+				<mesh filename="../scenes/Schunk/L5.dae" />
+			</geometry> 
+		</visual> 
+		<collision> <origin xyz="0.0145115 -0.0571105 0.0000425" rpy="-1.57 0 0"/> <geometry> <box size="0.117977 0.204179 0.089915"/> </geometry> </collision> 
+	</link>
+
+	<link name = "L6"> 
+    <inertial>
+      <mass value="2.318"/>
+      <!-- <inertia ixx="0.0104" ixy="0" ixz="0" iyy="0.0041" iyz="0" izz="0.0125"/> -->
+      <inertia ixx="0.0071" ixy="0.0020" ixz="0" iyy="0.0029" iyz="0" izz="0.008"/>
+	  <origin xyz="0.0232 -0.0377 0"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L6.dae" /> </geometry> </visual> 
+		<collision> <origin xyz="0.0175015 -0.0481615 0.0"/> <geometry> <box size="0.111977 0.185277 0.089"/> </geometry> </collision> 
+	</link>
+	
+	<link name = "L7_EFF"> 
+    <inertial>
+      <mass value="2.3838"/>
+      <!-- <inertia ixx="0.0126" ixy="0" ixz="0" iyy="0.013" iyz="0" izz="0.0027"/> -->
+      <inertia ixx="0.0104" ixy="0" ixz="0" iyy="0.0108" iyz="0" izz="0.0027"/>
+	  <origin xyz="0 0 0.0306"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L7_EFF.dae" /> </geometry> </visual> 
+		<!-- Collision parameters need to be edited -->
+		<collision> <origin xyz="0.0175015 -0.0481615 0.0"/> <geometry> <box size="0.111977 0.185277 0.089"/> </geometry> </collision> 
+	</link>
+
+
+	<joint name = "fix_arm_to_world" type="fixed">
+		<parent link = "world"/>
+		<child link = "Bracket"/>
+	</joint>
+
+	<joint name="LJ1" type="revolute"> <parent link="Bracket" /> <child link="L1" />
+		<origin xyz = "0.2823 0.0845 0" rpy="0 3.1416 -1.5708" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-3.1416" upper="3.1416" velocity="0.1" />
+	</joint>
+	<joint name="LJ2" type="revolute"> <parent link="L1" /> <child link="L2" />
+		<origin xyz="0 0.0 0" rpy="-3.1416 3.1416 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ3" type="revolute"> <parent link="L2" /> <child link="L3" />
+		<origin xyz="0 -0.328 0" rpy="-3.1416 -3.1416 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ4" type="revolute"> <parent link="L3" /> <child link="L4" />
+		<origin xyz="0 0 0" rpy="3.1416 3.1416 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ5" type="revolute"> <parent link="L4" /> <child link="L5" />
+		<origin xyz="0 -0.2765 0" rpy="3.1416 4.7124 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ6" type="revolute"> <parent link="L5" /> <child link="L6" />
+		<origin xyz="0 0 0" rpy="3.1416 3.1416 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+	
+	<joint name="LJ7" type="revolute"> <parent link="L6" /> <child link="L7_EFF" />
+		<origin xyz="0 -0.184 0" rpy="1.57 0 0" />
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<axis xyz="0 0 1" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+</robot>

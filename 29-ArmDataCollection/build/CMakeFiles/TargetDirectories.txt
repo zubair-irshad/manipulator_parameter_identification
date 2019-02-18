@@ -1,0 +1,4 @@
+/home/munzir/Documents/Software/29-ArmDataCollection/build/CMakeFiles/rebuild_cache.dir
+/home/munzir/Documents/Software/29-ArmDataCollection/build/CMakeFiles/edit_cache.dir
+/home/munzir/Documents/Software/29-ArmDataCollection/build/CMakeFiles/currentControl.run.dir
+/home/munzir/Documents/Software/29-ArmDataCollection/build/CMakeFiles/currentControl.dir

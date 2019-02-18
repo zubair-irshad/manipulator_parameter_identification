@@ -1,0 +1,20 @@
+# Exclude build directories, since they are artifacts of compilation
+/build
+
+# 3DOF-WIP
+/3DOF-WIP/build
+
+# 7DOFArm
+/7DOFArm/build
+
+# Krang
+/Krang/build/*
+!/Krang/build/tempWorld.txt
+
+# KrangFixedWheels
+/KrangFixedWheels/build
+
+# KrangWaist
+/KrangWaist/build
+
+# scenes

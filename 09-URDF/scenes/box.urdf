@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name="box">
+  <link name="box">
+		<visual> <geometry> <mesh filename="objects/box.dae" /> </geometry> </visual>
+  </link>
+</robot>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="box">
+  <link name="box">
+		<inertial>
+			<mass value="1.1" />
+			<inertia ixx="0.000867" ixy="0.0" ixz="0.0" iyy="0.000867" iyz="0.0" izz="0.000867" />
+			<origin xyz="0 0 0" />
+		</inertial>
+		<visual> <geometry> <mesh filename="objects/boxSmall.dae" /> </geometry> </visual>
+		<collision> <geometry> <mesh filename="objects/boxSmall.dae" /> </geometry> </collision>
+  </link>
+</robot>

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!-- @file 03-World-IK.urdf -->
+<!-- @author Can Erdogan -->
+<!-- @date May 13, 2013 -->
+<!-- @brief Contains the definition for the world setup where the green arrow object -->
+<!-- dictates the position and the direction for the end-effector and the red objects are the -->
+<!-- obstacles that the IK should avoid. -->
+ 
+<world name="schunk_with_desktop">
+	
+	<!-- Include the models by including either the complete urdf or referencing the file name -->
+	<include filename="~/../../etc/kore/model/Krang.urdf" model_name="krang"/>
+	<include filename="redPoint.urdf" model_name="obstacle"/>
+
+	<entity model="krang" name="Krang"> <origin xyz="0.0 0.0 0.30" rpy="1.5708 0 -1.5708"/> </entity>  
+	<entity model="obstacle" name="Obstacle"> <origin xyz="2.45 0.27 1.13" rpy="1.5708 0 1.5708 "/> </entity>
+</world> 

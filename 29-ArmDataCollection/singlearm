@@ -1,0 +1,302 @@
+#!/bin/bash
+
+# channel names
+CMD1="singlearm-cmd"
+STATE1="singlearm-state"
+
+PLANNING_HOST="munzir"
+#****************
+# DEFINITIONS
+#****************
+
+#CAN Interfaces
+CANBUS_0=0 #First four motor set
+CANBUS_1=1 #Second four motor set
+
+ACH_MODE=666
+
+STARTCOLOR="\033[1;32m"
+STOPCOLOR="\033[1;31m"
+QUESTIONCOLOR="\033[1;35m"
+NOCOLOR="\033[0;36m"
+
+
+#Joint limits - radians
+JOINT_1_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_1_MAX=1.507        # PI/2, Joint limit for rotational joints
+JOINT_2_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_2_MAX=1.507        # PI/2, Joint limit for rotational joints
+JOINT_3_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_3_MAX=1.507        # PI/2, Joint limit for rotational joints
+JOINT_4_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_4_MAX=1.507        # PI/2, Joint limit for rotational joints
+JOINT_5_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_5_MAX=1.507        # PI/2, Joint limit for rotational joints
+JOINT_6_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_6_MAX=1.507        # PI/2, Joint limit for rotational joints
+JOINT_7_MIN=-1.507       # PI/2, Joint limit for rotational joints
+JOINT_7_MAX=1.507        # PI/2, Joint limit for rotational joints
+ENDEFF_MIN=-1.0          # Limit for end effector
+ENDEFF_MAX=1.0           # Limit for end effector
+
+
+# Check where SNS is located
+if test -z $SNS; then
+    if test -x /home/ana/local/etc/init.d/sns; then
+		SNS=/home/ana/local/etc/init.d/sns
+    elif test -x /usr/local/etc/init.d/sns; then
+		SNS=/usr/local/etc/init.d/sns
+    elif test -x /etc/init.d/sns; then
+		SNS=/etc/init.d/sns
+    else 
+		echo "[ERROR] Could not find SNS program"
+		exit 1
+    fi
+fi
+
+#**************
+# FUNCTIONS
+#**************
+
+#ShowUsage() {
+	#complete later
+#}
+StartSNS() {
+    snslogd_is_running=`pgrep snslogd`
+	echo "snslogd (if exists) has pid:: ${snslogd_is_running}"
+    
+    if test -z $snslogd_is_running; then
+	echo "\t * Starting SNS service"
+	$SNS start
+    else 
+	echo "\t * SNS already is running"
+    fi
+}
+
+# Assuming the last issued command is to create a daemon, checks the result
+check ()
+{
+	rc=$?
+	if [ $rc -eq 0 ]; then
+		echo "Created "$1" daemon successfully."
+	else
+		echo "Failed to create "$1" daemon. Exiting."
+		exit 1
+	fi
+}
+
+check_hoks ()
+{
+	sleep .25
+	nhoks=`cat /run/somatic/$1/out | grep -i "STATE_HOME_OK" | wc -l`
+	# echo `/run/somatic/$1/out`
+	if [[ $nhoks -lt $2 ]]
+	then
+		echo "daemon $1 failed to produce the required number of HOME_OKs: has $nhoks, needs $2"
+	fi
+	if [[ $nhoks -eq $2 ]]
+	then
+		echo "daemon $1 has all $nhoks HOME_OKs"
+	fi
+	if [[ $nhoks -gt $2 ]]
+	then
+		echo "daemon $1 has too many ($nhoks/$2) HOME_OKs, something smells fishy"
+	fi
+}
+
+CreateAllAchChannels()
+{
+	# Don't use deprecated -C option. Use "mk" as below
+	ach -o $ACH_MODE -1 -C $STATE1 #-m 10 -n $((24*7 + 512)) 
+	ach -o $ACH_MODE -1 -C $CMD1 #-m 10 -n $((8*7  + 512)) 
+}
+
+DeleteAllAchChannels(){
+	ach -U $CMD1
+	ach -U $STATE1
+}
+
+
+#Load esdcan/mount CAN Channels
+#(This works)
+LoadDrivers() {
+
+  # Load the driver
+  lsmod | grep -q esdcan
+  if [ $? -eq 1 ]
+  then
+     echo "esdcan module was not loaded yet";
+     sudo insmod /lib/modules/3.16.0-4-amd64/kernel/drivers/esdcan/esdcan-pci405.ko
+     echo "Here, just loaded it for you."
+  else
+     echo "esdcan module is already loaded"
+  fi
+
+#<< END ********************
+  # Create device files can0/1 (one per group)
+  cd /dev
+  for i in `seq 0 1`
+  do
+    name="can${i}";
+    if ! [ -e $name ]
+    then
+       sudo mknod --mode=a+rw $name c 53 $i;
+    fi
+  done
+     # *********************
+#END
+
+  echo "Finished LoadDrivers"
+}
+
+
+#Set current limits on each joint
+
+
+#Launch pciod asa daemon pub/sub to ach channels
+StartAllProcess()
+{
+	echo -e $STARTCOLOR "\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ STARTING DAEMONS ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" $NOCOLOR 
+
+	#Set up the arm and f/t sensor
+	echo -e $STARTCOLOR "\nStarting single arm and f/t daemons" $NOCOLOR
+	
+	# Setting up for pciod daemon
+	sns -a pciod-singlearm; result=$?
+	if [ $result -eq 0 ]; 
+	then
+		echo "pciod-singlearm daemon already alive"
+	else
+		echo "Starting singlearm daemon"
+		#Print the states to check for HOK
+		pciod -Q state -b $CANBUS_0 -m 1 -m 2 -m 3 -m 4
+		pciod -Q state -b $CANBUS_1 -m 5 -m 6 -m 7 #-m 8
+
+		pciod -S param_min_fpos \
+			-b $CANBUS_0 -m 1 -x $JOINT_1_MIN \
+			-b $CANBUS_0 -m 2 -x $JOINT_2_MIN \
+			-b $CANBUS_0 -m 3 -x $JOINT_3_MIN \
+			-b $CANBUS_0 -m 4 -x $JOINT_4_MIN \
+			-b $CANBUS_1 -m 5 -x $JOINT_5_MIN \
+			-b $CANBUS_1 -m 6 -x $JOINT_6_MIN \
+			-b $CANBUS_1 -m 7 -x $JOINT_7_MIN \
+			#-b $CANBUS_1 -m 8 -x $ENDEFF_MIN \
+		pciod -S param_max_fpos \
+			-b $CANBUS_0 -m 1 -x $JOINT_1_MAX \
+			-b $CANBUS_0 -m 2 -x $JOINT_2_MAX \
+			-b $CANBUS_0 -m 3 -x $JOINT_3_MAX \
+			-b $CANBUS_0 -m 4 -x $JOINT_4_MAX \
+			-b $CANBUS_1 -m 5 -x $JOINT_5_MAX \
+			-b $CANBUS_1 -m 6 -x $JOINT_6_MAX \
+			-b $CANBUS_1 -m 7 -x $JOINT_7_MAX \
+			#-b $CANBUS_1 -m 8 -x $ENDEFF_MAX \
+			
+		# The daemon call for arm
+		pciod -d -I pciod-singlearm -c $CMD1 -s $STATE1 \
+			-b $CANBUS_0 -m 1 -m 2 -m 3 -m 4 -b $CANBUS_1 -m 5 -m 6 -m 7 -v -v
+			#-b $CANBUS_0 -m 1 -m 2 -m 3 -m 4 -b $CANBUS_1 -m 5 -m 6 -m 7 -m 8 -v -v
+		check "pciod-singlearm"
+		check_hoks "pciod-singlearm" 7
+	fi
+	
+
+	#Pull arm states..?
+	#$SNS run -d push_state_arm -- achd -d push $PLANNING_HOST state1
+	#$SNS run -d push_cmd_arm -- achd -d push $PLANNING_HOST cmd1
+	#run daemons
+	#$SNS run -d -r sdh-arm -- sdhiod -b $CANBUS_0 -c cmd1 -s state1
+
+pciod -S param_max_current \
+        -b $CANBUS_0 -m 1 -x 10.0 -m 2 -x 10.0 -m 3 -x 8.0 -m 4 -x 8.0 \
+        -b $CANBUS_1 -m 5 -x 6.0 -m 6 -x 6.0 -m 7 -x 6.0 #-m 8 -x 13  
+}
+
+StopAllProcess()
+{
+	echo -e $STOPCOLOR "\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ STOPPING DAEMONS ^^^^^^^^^^^^\
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" $NOCOLOR
+
+echo -e $STOPCOLOR "\nSending SIGTERM to pciod daemons" $NOCOLOR
+	
+	sns -k pciod-singlearm
+
+echo -e $STOPCOLOR "\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ STOP COMPLETE ^^^^^^^^^^^^^^^^^^\
+^^^^^^^^^^^^^^^^^^^^^^^^^\n" $NOCOLOR
+}
+
+#***************
+# Stop
+#**************
+
+# Kill pciod
+#END
+PrintInfo () {
+	isalive pciod-singlearm
+}
+isalive() {
+	sns -a "$1"
+	if [ 0 -eq "$?"  ]; then
+	    echo $1 alive
+	else
+	    echo $1 NOT ALIVE
+	    exit 1;
+	fi
+}
+
+#unmount esdcan stuff
+
+#*******************
+#  MAIN  #
+#*******************
+case "$1" in
+	load)
+		LoadDrivers
+		;;
+
+	startsns)
+		StartSNS
+		;;
+	
+	start)
+		#EchoHWMode?
+        CreateAllAchChannels
+		StartAllProcess
+        ;;
+	
+	restart)
+		#ReadHWMode?
+
+		StopAllProcess
+		CreateAllAchChannels
+		StartAllProcess
+		;;
+	
+	status)
+		PrintInfo
+		;;
+    
+    stop)
+		StopAllProcess
+		DeleteAllAchChannels
+		;;
+
+	*)
+		echo "[ERROR] Invalid command. Options are start/stop/load/startsns/restart NEW_OWNER/expunge"
+        exit 1
+        ;;
+esac
+
+exit 0
+
+
+#Sequence of commands to start, move and stop the arm
+# sudo service somatic start
+# sudo ./singlearm start
+# echo 0.2 0.0 0.0 0.1 -0.6 0.0 0.0 | sudo somatic_motor_cmd singlearm pos 
+# sudo ./singlearm stop
+
+#troubleshooting
+# sudo ./singlearm load
+# pkill pciod-singlearm 
+
+#eof

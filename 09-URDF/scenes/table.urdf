@@ -1,0 +1,27 @@
+<!-- glassDiningTable.urdf -->
+
+<object name="glassDiningTable">
+
+	<!-- Link 0 -->
+	<link name="link_0">
+		<inertial>
+			<mass value="10.0" />
+<!--			<inertia ixx="0.06667" ixy="0.0" ixz="0.0" iyy="0.06667" iyz="0.0" izz="0.01667" /> -->
+<inertia ixx="0.5" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.5"/>
+			<origin xyz="0 0 0" />
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="objects/table.dae"/>
+			</geometry>
+		</visual>
+		<collision> 
+			<origin xyz="0.0 0.0 -0.057"/>
+      <geometry>
+        <box size="0.42 1.01 0.775"/>
+      </geometry>
+		</collision> 
+
+	</link>
+
+</object>

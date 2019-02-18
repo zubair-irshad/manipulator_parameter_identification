@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<robot name="tray">
+
+	<!-- Link 0 -->
+	<link name="link_0">
+		<inertial>
+			<mass value="0.2" />
+			<inertia ixx="0.004168" ixy="0.0" ixz="0.0" iyy="0.001043" iyz="0.0" izz="0.00521" />
+			<origin xyz="0 0 0" />
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="objects/tray.dae"/>
+			</geometry>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="objects/tray.dae"/>
+			</geometry>
+		</collision>
+	</link>
+
+</robot>

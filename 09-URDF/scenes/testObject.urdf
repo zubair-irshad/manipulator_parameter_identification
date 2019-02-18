@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot name="cylinder">
+
+	<link name = "Bracket"> 
+    <inertial>
+      <mass value="9.81"/>
+      <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+			<!-- offseted with 0.0827 because the origin of the bracket is at the bottom -->
+      <origin xyz="0 0.07747 0.000158"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="bracket.dae" /> </geometry> </visual> 
+		<collision> 
+			<origin xyz="0.0012875 0.0582 -0.0280530"/>
+      <geometry>
+        <box size="0.2815 0.23 0.22611"/>
+      </geometry>
+		</collision> 
+	</link>
+
+	<link name = "Kinect"> 
+    <inertial>
+      <mass value="1086.5"/>
+      <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+      <origin xyz="0.2 0.1 0.1"/>
+    </inertial>
+		<visual> <geometry> <mesh filename="Kinect/Kinect.dae" /> </geometry> </visual> 
+		<collision> 
+			<origin xyz="0.0 -0.0251 -0.0185"/>
+      <geometry>
+        <box size="0.28 0.07 0.063"/>
+      </geometry>
+		</collision> 
+	</link>
+
+	<joint name="Joint" type="revolute"> <parent link="Bracket" /> <child link="Kinect" />
+		<origin xyz = "-0.001 0.1805 -0.1120" rpy="3.1416 0 0" />
+		<axis xyz="1 0 0" /> <limit effort="1000" lower="-3.1416" upper="3.1416" velocity="0.1" />
+	</joint>
+
+</robot>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name="plane">
+  <link name="plane">
+		<visual> <geometry> <mesh filename="objects/plane.dae" /> </geometry> </visual>
+  </link>
+</robot>

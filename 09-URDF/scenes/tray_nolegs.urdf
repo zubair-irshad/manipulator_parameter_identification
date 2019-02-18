@@ -1,0 +1,43 @@
+<robot
+  name="Tray.SLDPRT">
+  <link
+    name="Tray3.SLDPRT">
+    <inertial>
+      <origin
+        xyz="-6.5049E-17 4.89461269979158E-18 0.0028795"
+        rpy="0 0 0" />
+      <mass
+        value="0.32278" />
+      <inertia
+        ixx="0.00115515281456079"
+        ixy="1.45583787809333E-19"
+        ixz="-5.012045330322E-20"
+        iyy="0.0025316011862731"
+        iyz="6.57224746739557E-20"
+        izz="0.00368427705126511" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Tray3.SLDPRT/meshes/Tray3.SLDPRT.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Tray3.SLDPRT/meshes/Tray3.SLDPRT.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

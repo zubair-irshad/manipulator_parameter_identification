@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<!-- @file Krang.urdf -->
+<!-- @author Can Erdogan -->
+<!-- @date May 10, 2013 -->
+<!-- @brief This file contains the .urdf definition for Krang. -->
+<!-- NOTE: The center of mass locations are taken from the MassTable by summing up the -->
+<!-- individual part values for the sections (which correspond to nodes here). -->
+<!-- TODO: Set the center of mass locations -->
+<!-- TODO: Set the correct masses. Note that the dae models have the brackets divided in two and -->
+<!-- connected to the middle motor for which we do not have measurements. -->
+<!-- NOTE: The bounding box values are taken by finding the min and max values of the dae files. -->
+
+<robot name="threeDOF">
+
+	<!-- ======================================================================================================== -->
+	<!-- ============================================== Links =================================================== -->
+	<!-- ======================================================================================================== -->
+
+	<link name = "LWheel"> 
+	    <inertial>
+	      <mass value="0.5"/>
+	      <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz="0.0025"/>
+	      <origin xyz="0 0 0"/>
+	    </inertial>
+		<visual> 
+			<geometry> 
+				<mesh filename="../scenes/Base/newwheel_super_res.dae" /> 
+			</geometry> 
+		</visual> 
+        <soft_shape>
+            <total_mass>0.5</total_mass>
+            <geometry>
+                <mesh filename="../scenes/Base/newwheel_super_res.dae" />
+            </geometry>
+			<kv>500.0</kv>
+			<ke>0.0</ke>
+			<damp>5.0</damp>
+        </soft_shape>		
+		<collision> 
+			<geometry> 
+				<mesh filename="../scenes/Base/newwheel_super_res.dae" />
+                                <!--sphere radius="0.265"/-->
+			 </geometry> 
+		</collision> 
+	</link>
+
+	<link name = "RWheel"> 
+	    <inertial>
+	      <mass value="0.5"/>
+	      <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz="0.0025"/>
+	      <origin xyz="0 0 0"/>
+	    </inertial>
+		<visual> 
+			<geometry> 
+				<mesh filename="../scenes/Base/newwheel_super_res.dae" />
+			</geometry> 
+		</visual> 
+        <soft_shape>
+            <total_mass>0.5</total_mass>
+            <geometry>
+                <mesh filename="../scenes/Base/newwheel_super_res.dae" />
+            </geometry>
+			<kv>500.0</kv>
+			<ke>0.0</ke>
+			<damp>5.0</damp>
+        </soft_shape>		
+		<collision> 
+			<geometry> 
+				<mesh filename="../scenes/Base/newwheel_super_res.dae" /> 
+                                <!--sphere radius="0.265"/-->
+			</geometry> 
+		</collision> 
+	</link>
+
+	<link name = "Base"> 
+    	<inertial>
+      			<mass value="2"/>
+      			<inertia ixx="26" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+      			<origin xyz="0 0.8 0" />
+    		</inertial> 
+		<visual> 
+			<geometry> 
+				<mesh filename="../scenes/BaseLink.dae" /> 
+			</geometry> 
+		</visual> 
+		<!--collision> 
+			<geometry> 
+				<mesh filename="../scenes/BaseLink_Short.dae" />
+			</geometry> 
+		</collision--> 
+	</link>
+
+	<!-- ======================================================================================================== -->
+	<!-- ============================================ Joints ==================================================== -->
+	<!-- ======================================================================================================== -->
+
+	<joint name="JLWheel" type="revolute"> 
+		<parent link="Base" /> <child link="LWheel" />
+		<origin xyz = "-0.34 0.00 -0.0" rpy="0 0 0" />
+		<axis xyz="-1 0 0" /> 
+		<limit effort="1000" lower="-10000000000000000" upper="10000000000000000" velocity="10000000000000000" />
+	</joint>
+
+	<joint name="JRWheel" type="revolute"> 
+		<parent link="Base" /> <child link="RWheel" />
+		<origin xyz = "0.34 -0.00 -0.0" rpy="0 0 0" />
+		<axis xyz="-1 0 0" /> 
+		<limit effort="1000" lower="-10000000000000000" upper="10000000000000000" velocity="10000000000000000" />
+	</joint>
+
+
+</robot>

@@ -1,0 +1,432 @@
+<?xml version="1.0" ?>
+<!-- @file Krang.urdf -->
+<!-- @author Can Erdogan -->
+<!-- @modified by Akash Patel -->
+<!-- @date August, 2018 -->
+<!-- @brief This file contains the .urdf definition for Krang. -->
+<!-- The wheels have collision meshes since they are modeled as soft bodies -->
+
+<!-- NOTE: The collision box values are taken by finding the min and max values of the dae files and then tweaked based on the model to minimize excess white space. -->
+
+<!-- NOTE: The center of mass locations are taken from the MassTable by summing up the -->
+<!-- individual part values for the sections (which correspond to nodes here). -->
+<!-- TODO: Set the center of mass locations -->
+<!-- TODO: Set the correct masses. Note that the dae models have the brackets divided in two and -->
+<!-- connected to the middle motor for which we do not have measurements. -->
+
+<robot name="Krang">
+
+	<!-- Links -->
+
+	<link name = "LWheel">
+        <inertial>
+            <mass value="4.66"/>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+            <origin xyz="0 0 0"/>
+        </inertial>
+	    <visual> <geometry> <mesh filename="../scenes/Base/newwheel_super_res.dae" /> </geometry> </visual>
+	    <collision> <geometry> <mesh filename="../scenes/Base/newwheel_super_res.dae" /> </geometry> </collision>
+	    <soft_shape>
+            <total_mass>4.66</total_mass>
+            <geometry> <mesh filename="../scenes/Base/newwheel_super_res.dae" /> </geometry>
+	    	<kv>500.0</kv>
+	    	<ke>0.0</ke>
+	    	<damp>5.0</damp>
+        </soft_shape>
+	</link>
+
+	<link name = "RWheel">
+        <inertial>
+            <mass value="4.66"/>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+        <origin xyz="0 0 0"/>
+        </inertial>
+	    <visual> <geometry> <mesh filename="../scenes/Base/newwheel_super_res.dae" /> </geometry> </visual>
+	    <collision> <geometry> <mesh filename="../scenes/Base/newwheel_super_res.dae" /> </geometry> </collision>
+	    <soft_shape>
+            <total_mass>4.66</total_mass>
+            <geometry> <mesh filename="../scenes/Base/newwheel_super_res.dae" /> </geometry>
+	        <kv>500.0</kv>
+	        <ke>0.0</ke>
+	        <damp>5.0</damp>
+        </soft_shape>
+	</link>
+
+<!-- Finalized Inertial Parameters for Krang Base, Spine and Bracket -->
+
+	<link name = "Base">
+        <inertial>
+            <mass value="75.767"/>
+            <inertia ixx="2.9427" ixy="0.0001" ixz="0.0037" iyy="2.4034" iyz="-0.0113" izz="1.2335"/>
+            <origin xyz="-0.000628 0.001940 0.076721"/>
+            <!-- <origin xyz="-0.1 0.1 0.1"/> -->
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/base.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/base_slopedCollisionBox.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.00225 0.2097395 0.006300"/> <geometry> <box size="0.6 0.71048 0.32860"/> </geometry> </collision>
+	</link>
+
+	<link name = "Spine">
+        <inertial>
+            <mass value="14.006"/>
+            <inertia ixx="0.5601" ixy="0.0003" ixz="0.1548" iyy="0.53" iyz="-0.006" izz="0.2328"/>
+            <origin xyz="-0.051222 0.000345 0.080526"/>
+            <!-- <origin xyz="-0.1 0.1 0.1"/> -->
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/spine.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/spine.dae" /> </geometry> </collision -->
+		<collision> <origin xyz="-0.026 0.230000 0.103887"/> <geometry> <box size="0.1340 0.60000 0.14097"/> </geometry> </collision>
+	</link>
+
+	<link name = "Bracket">
+        <inertial>
+            <mass value="6.533"/>
+            <inertia ixx="0.1003" ixy="0" ixz="0" iyy="0.0214" iyz="0" izz="0.0987"/>
+            <origin xyz="0.0 0.076445 -0.005972"/>
+            <!-- <origin xyz="-0.1 0.1 0.1"/> -->
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/bracket.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/bracket.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.0012875 0.0882 -0.0280530"/> <geometry> <box size="0.2815 0.18 0.22611"/> </geometry> </collision>
+	</link>
+
+	<!--link name = "Kinect">
+        <inertial>
+            <mass value="0.705"/>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+            <origin xyz="0.0 -0.04 -0.028"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Kinect/Kinect.dae" /> </geometry> </visual>
+	</link-->
+
+	<link name = "L1">
+	    <inertial>
+	        <mass value="7.35"/>
+	        <inertia ixx="0.0381" ixy="0.0104" ixz="0" iyy="0.0187" iyz="0" izz="0.0430"/>
+	        <origin xyz="0.0217 -0.0691 0"/>
+	    </inertial>
+	    <visual> <geometry> <mesh filename="../scenes/Schunk/L1.dae" /> </geometry> </visual>
+	    <!--collision> <geometry> <mesh filename="../scenes/Schunk/L1.dae" /> </geometry> </collision-->
+        <collision> <origin xyz="0.015 -0.080866 0.0"/> <geometry> <box size="0.16 0.29367 0.13188"/> </geometry> </collision>
+	</link>
+
+	<link name = "L2">
+        <inertial>
+            <mass value="6.1405"/>
+            <!-- <inertia ixx="0.0504" ixy="0.0006" ixz="0" iyy="0.0178" iyz="0" izz="0.0579"/> -->
+	        <inertia ixx="0.0320" ixy="0.0097" ixz="0" iyy="0.0134" iyz="0" izz="0.0350"/>
+            <origin xyz="0.0269 -0.0548 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L2.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L2.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.017042 -0.058309 0.0"/> <geometry> <box size="0.14591 0.24658 0.13"/> </geometry> </collision>
+	</link>
+
+	<link name = "L3">
+        <inertial>
+            <mass value="4.531"/>
+            <!-- <inertia ixx="0.0354" ixy="-0.0003" ixz="0" iyy="0.01" iyz="0" izz="0.0394"/> -->
+            <inertia ixx="0.0180" ixy="0.005" ixz="0" iyy="0.0084" iyz="0" izz="0.0204"/>
+	        <origin xyz="0.0188 -0.00619 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L3.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L3.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.014000 -0.075113 0.0"/> <geometry> <box size="0.13800 0.26217 0.11189"/> </geometry> </collision>
+	</link>
+
+	<link name = "L4">
+        <inertial>
+            <mass value="3.2245"/>
+            <!-- <inertia ixx="0.0209" ixy="0.0003" ixz="0" iyy="0.0067" iyz="0" izz="0.0239"/> -->
+            <inertia ixx="0.0133" ixy="0.004" ixz="0" iyy="0.0049" iyz="0" izz="0.0145"/>
+	        <origin xyz="0.0238 -0.0484 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L4.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L4.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.018200 -0.052050 0.0"/> <geometry> <box size="0.12960 0.2141 0.11"/> </geometry> </collision>
+	</link>
+
+	<link name = "L5">
+        <inertial>
+            <mass value="2.318"/>
+            <!-- <inertia ixx="0.012" ixy="-0.0002" ixz="0" iyy="0.0035" iyz="0" izz="0.0135"/> -->
+            <inertia ixx="0.0063" ixy="0.0017" ixz="0" iyy="0.0029" iyz="0" izz="0.0072"/>
+	        <origin xyz="0.0166 -0.0494 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L5.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L5.dae" /> </geometry> </collision-->
+        <collision> <origin xyz="0.0145115 -0.0571105 0.0000425"/> <geometry> <box size="0.117977 0.204179 0.089915"/> </geometry> </collision>
+	</link>
+
+	<link name = "L6">
+        <inertial>
+            <mass value="2.318"/>
+            <!-- <inertia ixx="0.0104" ixy="0" ixz="0" iyy="0.0041" iyz="0" izz="0.0125"/> -->
+            <inertia ixx="0.0071" ixy="0.0020" ixz="0" iyy="0.0029" iyz="0" izz="0.008"/>
+	        <origin xyz="0.0232 -0.0377 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L6.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L6.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.0175015 -0.0481615 0.0"/> <geometry> <box size="0.111977 0.185277 0.089"/> </geometry> </collision>
+	</link>
+
+	<link name = "lGripper">
+	    <inertial>
+		    <mass value="2.3838"/>
+		    <inertia ixx="0.0104" ixy="0" ixz="0" iyy="0.0108" iyz="0" izz="0.0027"/>
+		    <!-- <inertia ixx="0.0126" ixy="0" ixz="0" iyy="0.013" iyz="0" izz="0.0027"/> -->
+			<!-- An addition of 4.05 cms from the end of Schunk gripper to space between two halves of ft -->
+	        <origin xyz="0 0 0.1055"/>
+	    </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L7.dae" /> </geometry> <!--origin rpy="0 0 1.0"/--> </visual>
+        <!-- origin on below line is orginally commented out -->
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L7.dae" /> </geometry> <origin rpy="0 0 1.0"/> </collision-->
+		<collision> <origin xyz="0.0 -0.0 0.02615" rpy="0.0 0.0 1.5708"/> <geometry> <box size="0.08 0.112 0.2025"/> </geometry> </collision>
+	</link>
+
+	<link name = "lgPlate1">
+        <inertial>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+            <mass value="0.0001"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.01 0.0 -0.04615"/> <geometry> <box size="0.025 0.075 0.09"/> </geometry> </collision>
+	</link>
+
+	<link name = "lgPlate2">
+        <inertial>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+            <mass value="0.0001"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.01 0.0 -0.04615"/> <geometry> <box size="0.025 0.075 0.09"/> </geometry> </collision>
+	</link>
+
+	<link name = "R1">
+        <inertial>
+	        <mass value="7.35"/>
+	        <inertia ixx="0.0381" ixy="0.0104" ixz="0" iyy="0.0187" iyz="0" izz="0.0430"/>
+	        <origin xyz="0.0217 -0.0691 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L1.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L1.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.015 -0.080866 0.0"/> <geometry> <box size="0.16 0.29367 0.13188"/> </geometry> </collision>
+	</link>
+
+	<link name = "R2">
+        <inertial>
+      	    <mass value="6.1405"/>
+      	    <inertia ixx="0.0320" ixy="0.0097" ixz="0" iyy="0.0134" iyz="0" izz="0.0350"/>
+	        <origin xyz="0.0269 -0.0548 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L2.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L2.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.017042 -0.058309 0.0"/> <geometry> <box size="0.14591 0.24658 0.13"/> </geometry> </collision>
+	</link>
+
+	<link name = "R3">
+        <inertial>
+      	    <mass value="4.531"/>
+      	    <inertia ixx="0.0180" ixy="0.005" ixz="0" iyy="0.0084" iyz="0" izz="0.0204"/>
+	    <origin xyz="0.0188 -0.00619 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L3.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L3.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.014000 -0.075113 0.0"/> <geometry> <box size="0.13800 0.26217 0.11189"/> </geometry> </collision>
+	</link>
+
+	<link name = "R4">
+        <inertial>
+      	    <mass value="3.2245"/>
+      	    <inertia ixx="0.0133" ixy="0.004" ixz="0" iyy="0.0049" iyz="0" izz="0.0145"/>
+	        <origin xyz="0.0238 -0.0484 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L4.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L4.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.018200 -0.052050 0.0"/> <geometry> <box size="0.12960 0.2141 0.11"/> </geometry> </collision>
+	</link>
+
+	<link name = "R5">
+        <inertial>
+      	    <mass value="2.318"/>
+      	    <inertia ixx="0.0063" ixy="0.0017" ixz="0" iyy="0.0029" iyz="0" izz="0.0072"/>
+	        <origin xyz="0.0166 -0.0494 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L5.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L5.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.0145115 -0.0571105 0.0000425"/> <geometry> <box size="0.117977 0.204179 0.089915"/> </geometry> </collision>
+	</link>
+
+	<link name = "R6">
+        <inertial>
+      	    <mass value="2.318"/>
+      	    <inertia ixx="0.0071" ixy="0.0020" ixz="0" iyy="0.0029" iyz="0" izz="0.008"/>
+	        <origin xyz="0.0232 -0.0377 0"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L6.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L6.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.0175015 -0.0481615 0.0"/> <geometry> <box size="0.111977 0.185277 0.089"/> </geometry> </collision>
+	</link>
+
+	<link name = "rGripper">
+        <inertial>
+     	    <mass value="2.3838"/>
+		    <inertia ixx="0.0104" ixy="0" ixz="0" iyy="0.0108" iyz="0" izz="0.0027"/>
+			<!-- An addition of 4.05 cms from the end of Schunk gripper to space between two halves of ft -->
+            <origin xyz="0 0 0.1055"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/L7.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/L7.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.0 -0.0 0.02615" rpy="0.0 0.0 1.5708"/> <geometry> <box size="0.08 0.112 0.2025"/> </geometry> </collision>
+	</link>
+
+	<link name = "rgPlate1">
+        <inertial>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+            <mass value="0.0001"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.01 0.0 -0.04615"/> <geometry> <box size="0.025 0.075 0.09"/> </geometry> </collision>
+	</link>
+
+	<link name = "rgPlate2">
+        <inertial>
+            <inertia ixx="0.102019" ixy="2.45462e-05" ixz="0.00713022" iyy="0.0832724" iyz="-0.00131733" izz="0.086493"/>
+            <mass value="0.0001"/>
+        </inertial>
+		<visual> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </visual>
+		<!--collision> <geometry> <mesh filename="../scenes/Schunk/gripperPlate.dae" /> </geometry> </collision-->
+		<collision> <origin xyz="0.01 0.0 -0.04615"/> <geometry> <box size="0.025 0.075 0.09"/> </geometry> </collision>
+	</link>
+
+
+	<!-- ======================================================================================================== -->
+	<!-- ============================================ Joints ==================================================== -->
+	<!-- ======================================================================================================== -->
+
+	<joint name="JLWheel" type="revolute"> <parent link="Base" /> <child link="LWheel" />
+		<origin xyz = "-0.354 0.0 0" rpy="0 0 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-3.1416" upper="3.1416" velocity="0.1" />
+	</joint>
+
+	<joint name="JRWheel" type="revolute"> <parent link="Base" /> <child link="RWheel" />
+		<origin xyz = "0.361 0.0 0" rpy="0 0 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-3.1416" upper="3.1416" velocity="0.1" />
+	</joint>
+
+	<joint name="JWaist" type="revolute"> <parent link="Base" /> <child link="Spine" />
+		<origin xyz = "0.026 0.499 -0.091" rpy="0 0 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="0" upper="2.7" velocity="0.1" />
+	</joint>
+
+	<joint name="JTorso" type="revolute"> <parent link="Spine" /> <child link="Bracket" />
+		<origin xyz = "-0.0285 0.584 0.1088" rpy="0 3.1416 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-0.8" upper="0.8" velocity="0.1" />
+	</joint>
+
+	<!--joint name="JKinect" type="revolute"> <parent link="Bracket" /> <child link="Kinect" />
+		<origin xyz = "-0.001 0.1805 -0.1120" rpy="3.1416 0 0" />
+		<axis xyz="1 0 0" /> <limit effort="1000" lower="-3.1416" upper="3.1416" velocity="0.1" />
+	</joint-->
+
+	<!-- =================== Left Arm =================== -->
+	<!-- ================================================ -->
+
+	<joint name="LJ1" type="revolute"> <parent link="Bracket" /> <child link="L1" />
+		<origin xyz = "0.2823 0.0845 0" rpy="0 3.1416 -1.5708" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-3.1416" upper="3.1416" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ2" type="revolute"> <parent link="L1" /> <child link="L2" />
+		<origin xyz="0 0.0 0" rpy="3.14 3.14 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ3" type="revolute"> <parent link="L2" /> <child link="L3" />
+		<origin xyz="0 -0.328 0" rpy="-3.1416 -3.1416 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ4" type="revolute"> <parent link="L3" /> <child link="L4" />
+		<origin xyz="0 0 0" rpy="3.1416 3.1416 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ5" type="revolute"> <parent link="L4" /> <child link="L5" />
+		<origin xyz="0 -0.2765 0" rpy="3.1416 3.1416 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="LJ6" type="revolute"> <parent link="L5" /> <child link="L6" />
+		<origin xyz="0 0 0" rpy="0 0 3.1416" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<!-- For some reason, I had to negate the axis to make sure the motor turns like the others -->
+	<joint name="LJFT" type="revolute"> <parent link="L6" /> <child link="lGripper" />
+		<origin xyz="0 -0.200 0" rpy="1.5708 4.7124 0" />
+		<axis xyz="0 0 -1" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="LMotorPlate1" type="fixed"> <parent link="lGripper" /> <child link="lgPlate1" />
+		<origin xyz="-0.045 0.0 0.127" rpy="3.1416 0 0" />
+		<axis xyz="1 0 0" /> <limit effort="1000" lower="0.0" upper="0.022" velocity="0.1" />
+	</joint>
+
+	<joint name="LMotorPlate2" type="fixed"> <parent link="lGripper" /> <child link="lgPlate2" />
+		<origin xyz="0.045 0.000 0.127" rpy="3.1416 0 3.1416" />
+		<axis xyz="1 0 0" /> <limit effort="1000" lower="0.0" upper="0.022" velocity="0.1" />
+	</joint>
+
+	<!-- =================== Right Arm ================== -->
+	<!-- ================================================ -->
+
+	<joint name="RJ1" type="revolute"> <parent link="Bracket" /> <child link="R1" />
+		<origin xyz = "-0.2823 0.0845 0" rpy="0 0 1.5708" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="RJ2" type="revolute"> <parent link="R1" /> <child link="R2" />
+		<origin xyz="0 0.0 0" rpy="3.14 3.14 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="RJ3" type="revolute"> <parent link="R2" /> <child link="R3" />
+		<origin xyz="0 -0.328 0" rpy="-3.1416 -3.1416 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="RJ4" type="revolute"> <parent link="R3" /> <child link="R4" />
+		<origin xyz="0 0 0" rpy="-3.1416 3.1416 0" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="RJ5" type="revolute"> <parent link="R4" /> <child link="R5" />
+		<origin xyz="0 -0.2765 0" rpy="3.1416 3.1416 0" />
+		<axis xyz="0 -1 0" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="RJ6" type="revolute"> <parent link="R5" /> <child link="R6" />
+		<origin xyz="0 0 0" rpy="0 0 3.1416" />
+		<axis xyz="-1 0 0" /> <limit effort="1000" lower="-2.094" upper="2.094" velocity="0.1" />
+	</joint>
+
+	<joint name="RJFT" type="revolute"> <parent link="R6" /> <child link="rGripper" />
+		<origin xyz="0 -0.200 0" rpy="1.5708 4.7124 0" />
+		<axis xyz="0 0 -1" /> <limit effort="1000" lower="-4.7124" upper="4.7124" velocity="0.1" />
+	</joint>
+
+	<joint name="RMotorPlate1" type="fixed"> <parent link="rGripper" /> <child link="rgPlate1" />
+		<origin xyz="-0.045 0.0 0.127" rpy="3.1416 0 0" />
+		<axis xyz="1 0 0" /> <limit effort="1000" lower="0.0" upper="0.022" velocity="0.1" />
+	</joint>
+
+	<joint name="RMotorPlate2" type="fixed"> <parent link="rGripper" /> <child link="rgPlate2" />
+		<origin xyz="0.045 0.000 0.127" rpy="3.1416 0 3.1416" />
+		<axis xyz="1 0 0" /> <limit effort="1000" lower="0.0" upper="0.022" velocity="0.1" />
+	</joint>
+
+</robot>
